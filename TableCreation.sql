@@ -77,7 +77,7 @@ Create Table ANNUAL_LEAVE(
 	Description nvarchar(500) default 'EMPTY',
 	StartDate DateTime default getDate(),
 	EndDate DateTime ,
-	ApprovalStatus nvarchar(15) check(ApprovalStatus in('Denied', 'Approved')) default 'Denied'
+	ApprovalStatus nvarchar(15) check(ApprovalStatus in('Denied', 'Pending','Approved')) default 'Pending'
 
 )
 
