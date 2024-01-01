@@ -124,3 +124,4 @@ CREATE TABLE PARKING_SLOT(
 	Category VARCHAR(100),
 	CHECK (Status IN ('Available', 'Occupied', 'Reserved')) -- Check constraint for valid Status values
 );
+CREATE INDEX cardIndex ON GUEST_CARD(CardNumber);
