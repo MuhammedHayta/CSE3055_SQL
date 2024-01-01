@@ -24,14 +24,14 @@ CREATE TABLE GUEST_MOVEMENT(
 
 CREATE TABLE GUEST_CARD(
     ID int identity(1,1) primary key,
-    CardNumber varchar(12),
+    CardNumber varchar(12) unique NOT NULL,
     CardName varchar(50),
     CardStatus varchar(12) CHECK(CardStatus IN('Available', 'Busy', 'Lost')) DEFAULT('Available'),
     Issued int foreign key references GUEST_MOVEMENT(ID),
     --Vehicle int foreign key references VEHICLE(ID)
 );
 
-
+CREATE INDEX cardIndex ON GUEST_CARD(CardNumber);
 
 Create Table STAFF(
 	StaffID int,
@@ -61,8 +61,6 @@ Create Table DEPARTMENT(
 	Primary key(DepartmentID),
 	DepartmentName nvarchar(500),
 	Location nvarchar(500),
-	StaffID int,
-	foreign key (StaffID) references PERSON(ID),
 	ManagerID int,
 	foreign key (ManagerID) references PERSON(ID)
 )
@@ -120,3 +118,5 @@ CREATE TABLE STAFF_MOVEMENT (
 	Date DATETime,
 	CONSTRAINT CHK_DescriptionLength CHECK (LEN(Description) <= 255) -- Check constraint for maximum length of Description);
 )
+
+CREATE INDEX cardIndex ON GUEST_CARD(CardNumber);
