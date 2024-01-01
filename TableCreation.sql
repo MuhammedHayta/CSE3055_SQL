@@ -3,8 +3,8 @@ CREATE TABLE PERSON(
     FirstName varchar(50) NOT NULL,
     LastName varchar(50) NOT NULL,
     Birthdate date NOT NULL,
-    PhoneNumber int ,
-    IdentityNumber int CHECK(IdentityNumber%2 = 0 AND LOG(IdentityNumber,10)<=11 AND LOG(IdentityNumber,10)>10 )
+    PhoneNumber nvarchar(13),
+    IdentityNumber nvarchar(11)
 );
 
 CREATE TABLE GUEST(
@@ -12,14 +12,20 @@ CREATE TABLE GUEST(
     Company varchar(100),
 );
 
+CREATE TABLE VEHICLE ( 
+	ID INT identity(1,1) PRIMARY KEY,
+	LicensePlate VARCHAR(100)
+)
+
 CREATE TABLE GUEST_MOVEMENT(
     ID int identity(1,1) primary key,
+	GuestID int foreign key references PERSON(ID),
+	Vehicle int foreign key references VEHICLE(ID),
     EnterDate dateTime DEFAULT(GETDATE()) NOT NULL,
     LeaveDate dateTime ,
     VisitingReason varchar(255),
     WhoToVisit int foreign key references PERSON(ID),
     CardNumber varchar(12)
-
 )
 
 CREATE TABLE GUEST_CARD(
@@ -28,7 +34,6 @@ CREATE TABLE GUEST_CARD(
     CardName varchar(50),
     CardStatus varchar(12) CHECK(CardStatus IN('Available', 'Busy', 'Lost')) DEFAULT('Available'),
     Issued int foreign key references GUEST_MOVEMENT(ID),
-    --Vehicle int foreign key references VEHICLE(ID)
 );
 
 CREATE INDEX cardIndex ON GUEST_CARD(CardNumber);
@@ -77,7 +82,7 @@ Create Table ANNUAL_LEAVE(
 )
 
 CREATE TABLE MACHINE (
-	ID INT PRIMARY KEY,
+	ID INT identity(1,1) PRIMARY KEY,
 	DepartmentId INT REFERENCES DEPARTMENT(DepartmentID),
 	Description VARCHAR(255) CHECK (LEN(Description) <= 255),  -- Check constraint for maximum length of Description);
 	PurchaseDate DATE,
@@ -89,7 +94,7 @@ CREATE TABLE MACHINE (
 )
 
 CREATE TABLE MALFUNCTION (
-    ID INT PRIMARY KEY,
+    ID INT identity(1,1) PRIMARY KEY,
 	StaffId INT REFERENCES PERSON(ID),
     MachineId INT REFERENCES MACHINE(ID),
     MalfunctionDefinition VARCHAR(255),
@@ -101,15 +106,8 @@ CREATE TABLE MALFUNCTION (
 	CONSTRAINT CHK_DefinitionLength CHECK (LEN(MalfunctionDefinition) <= 255) -- Check constraint for maximum length of Description);
 );
 
-
-CREATE TABLE VEHICLE ( 
-	ID INT PRIMARY KEY,
-	LicensePlate VARCHAR(100)
-)
-
-
 CREATE TABLE STAFF_MOVEMENT (
-	ID INT PRIMARY KEY,
+	ID INT identity(1,1) PRIMARY KEY,
 	VehicleID INT REFERENCES VEHICLE(ID),
 	StaffId INT REFERENCES PERSON(ID),
 	DeparturePlace VARCHAR(255),
@@ -119,4 +117,10 @@ CREATE TABLE STAFF_MOVEMENT (
 	CONSTRAINT CHK_DescriptionLength CHECK (LEN(Description) <= 255) -- Check constraint for maximum length of Description);
 )
 
-CREATE INDEX cardIndex ON GUEST_CARD(CardNumber);
+CREATE TABLE PARKING_SLOT(
+	ID INT identity(1,1) PRIMARY KEY,
+	VehicleID INT REFERENCES VEHICLE(ID),
+	Status VARCHAR(100) DEFAULT 'Available', -- Default constraint to set Status to 'Available' if not provided
+	Category VARCHAR(100),
+	CHECK (Status IN ('Available', 'Occupied', 'Reserved')) -- Check constraint for valid Status values
+);
