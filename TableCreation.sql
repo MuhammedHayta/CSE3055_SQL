@@ -3,8 +3,8 @@ CREATE TABLE PERSON(
     FirstName varchar(50) NOT NULL,
     LastName varchar(50) NOT NULL,
     Birthdate date NOT NULL,
-    PhoneNumber int ,
-    IdentityNumber int CHECK(IdentityNumber%2 = 0 AND LOG(IdentityNumber,10)<=11 AND LOG(IdentityNumber,10)>10 )
+    PhoneNumber nvarchar(12),
+    IdentityNumber nvarchar(11)
 );
 
 CREATE TABLE GUEST(
