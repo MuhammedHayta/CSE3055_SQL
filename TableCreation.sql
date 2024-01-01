@@ -68,8 +68,9 @@ Create Table DEPARTMENT(
 )
 
 Create Table ANNUAL_LEAVE(
-	ID int,
-	foreign key (ID) references PERSON(ID),
+	ID int primary key,
+	staffID int,
+	foreign key (staffID) references PERSON(ID),
 	Description nvarchar(500) default 'EMPTY',
 	StartDate DateTime default getDate(),
 	EndDate DateTime ,
