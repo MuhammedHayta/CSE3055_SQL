@@ -3,7 +3,7 @@ CREATE TABLE PERSON(
     FirstName varchar(50) NOT NULL,
     LastName varchar(50) NOT NULL,
     Birthdate date NOT NULL,
-    PhoneNumber nvarchar(12),
+    PhoneNumber nvarchar(13),
     IdentityNumber nvarchar(11)
 );
 
@@ -11,6 +11,11 @@ CREATE TABLE GUEST(
     ID int foreign key references PERSON(ID),
     Company varchar(100),
 );
+
+CREATE TABLE VEHICLE ( 
+	ID INT identity(1,1) PRIMARY KEY,
+	LicensePlate VARCHAR(100)
+)
 
 CREATE TABLE GUEST_MOVEMENT(
     ID int identity(1,1) primary key,
@@ -101,13 +106,6 @@ CREATE TABLE MALFUNCTION (
     Status VARCHAR(100) CHECK (Status IN ('Open', 'Closed', 'InProgress')), -- Example check constraint
 	CONSTRAINT CHK_DefinitionLength CHECK (LEN(MalfunctionDefinition) <= 255) -- Check constraint for maximum length of Description);
 );
-
-
-CREATE TABLE VEHICLE ( 
-	ID INT identity(1,1) PRIMARY KEY,
-	LicensePlate VARCHAR(100)
-)
-
 
 CREATE TABLE STAFF_MOVEMENT (
 	ID INT identity(1,1) PRIMARY KEY,
