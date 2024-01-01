@@ -19,7 +19,7 @@ CREATE TABLE VEHICLE (
 
 CREATE TABLE GUEST_MOVEMENT(
     ID int identity(1,1) primary key,
-	GuestID int foreign key references GUEST(ID),
+	GuestID int foreign key references PERSON(ID),
 	Vehicle int foreign key references VEHICLE(ID),
     EnterDate dateTime DEFAULT(GETDATE()) NOT NULL,
     LeaveDate dateTime ,
