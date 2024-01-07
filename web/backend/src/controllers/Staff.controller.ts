@@ -11,6 +11,7 @@ const getAllStaffs = async (req, res) => {
     }
 }
 
+
 const StaffController = {
     getAllStaffs
 }
