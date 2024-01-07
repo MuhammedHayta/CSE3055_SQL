@@ -1,9 +1,8 @@
 create procedure reportMalfunction 
+    @StaffID int,
     @MachineID int,
     @StartDate datetime = null,
     @MalfunctionDefinition varchar(250)
-
-
 as 
 
 begin
@@ -11,6 +10,6 @@ begin
 		begin
 			set @StartDate = GETDATE()
 		end
-    insert into MALFUNCTION (MachineID, StartDate, MalfunctionDefinition, Status)
-    values (@MachineID, @StartDate, @MalfunctionDefinition, 'Open')
+    insert into MALFUNCTION (StaffID, MachineID, StartDate, MalfunctionDefinition, Status)
+    values (@StaffID, @MachineID, @StartDate,@MalfunctionDefinition, 'Open')
 end

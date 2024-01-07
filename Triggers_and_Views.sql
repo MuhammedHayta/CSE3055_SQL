@@ -7,7 +7,7 @@ BEGIN
     SET TotalLaborTime = s.TotalLaborTime + DATEDIFF(MINUTE, i.EntryTime, ISNULL(i.ExitTime, i.EntryTime)),
         TotalSalary = s.TotalSalary + (DATEDIFF(MINUTE, i.EntryTime, ISNULL(i.ExitTime, i.EntryTime)) / 60.0) * s.BaseSalary / 60.0
     FROM STAFF s
-    INNER JOIN INSERTED i ON s.StaffID = i.StaffID;
+    INNER JOIN INSERTED i ON s.ID = i.StaffID;
 END;
 
 
@@ -26,7 +26,7 @@ SELECT
 FROM
     MACHINE m
 JOIN
-    MALFUNCTION ma ON m.ID = ma.MachineId
+    MALFUNCTION ma ON m.ID = ma.MachineID
 WHERE
     ma.Status = 'Open' -- or 'InProgress' depending on your definition of a malfunctioned machine
     AND GETDATE() BETWEEN ma.StartDate AND ISNULL(ma.EndDate, GETDATE());
@@ -35,7 +35,7 @@ WHERE
 CREATE VIEW StaffOnAnnualLeave
 AS
 SELECT
-    p.ID AS StaffID,
+    s.ID AS StaffID,
     p.FirstName,
     p.LastName,
     al.Description AS AnnualLeaveDescription,
@@ -43,9 +43,11 @@ SELECT
     al.EndDate AS LeaveEndDate,
     al.ApprovalStatus
 FROM
-    PERSON p
-JOIN
-    ANNUAL_LEAVE al ON p.ID = al.ID
+    STAFF s
+INNER JOIN
+    Person p on s.PersonID = p.ID
+INNER JOIN
+    ANNUAL_LEAVE al ON s.ID = al.StaffID
 WHERE
     al.ApprovalStatus = 'Approved'
     AND GETDATE() BETWEEN al.StartDate AND ISNULL(al.EndDate, GETDATE());
@@ -67,21 +69,23 @@ LEFT JOIN
 WHERE
     sm.ID IS NULL OR sm.Date < GETDATE();
 
-
+--Burası tamam
 CREATE VIEW GuestsNotLeft
 AS
 SELECT
     g.ID AS GuestID,
-    g.FirstName,
-    g.LastName,
+    p.FirstName,
+    p.LastName,
     gm.EnterDate AS ArrivalDate,
     gm.LeaveDate AS ExpectedLeaveDate,
     gm.VisitingReason,
     gm.CardNumber
 FROM
-    PERSON g
-JOIN
-    GUEST_MOVEMENT gm ON g.ID = gm.WhoToVisit
+    GUEST g
+INNER JOIN
+    GUEST_MOVEMENT gm ON g.ID = gm.GuestID
+INNER JOIN
+    Person p ON g.PersonID = p.ID
 WHERE
     gm.LeaveDate IS NULL
     OR gm.LeaveDate >= GETDATE();
