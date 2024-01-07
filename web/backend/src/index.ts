@@ -28,7 +28,7 @@ app.use(express.raw({ limit: '50mb', type: 'application/octet-stream' }));
 
 
 const corsOptions = {
-    origin: ['http://localhost:5173', 'http://localhost:3000'],
+    origin: ['http://localhost:3000'],
     credentials: true, // Allow sending cookies and other credentials
 };
   
