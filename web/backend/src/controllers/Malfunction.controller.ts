@@ -43,13 +43,15 @@ const addMalfunction = async (req, res) => {
 }
 
 const updateMalfunction = async (req, res) => {
-    const {ID, StaffID, MachineID, MalfunctionDefinition, StartDate, EndDate, FixedBy, PerformedProcess, Status} = req.body;
+    const {ID,FixedBy, PerformedProcess} = req.body;
 
     const pool = await Database.getPool();
     const request = await pool.request();
-
+    const EndDate = new Date().toISOString().slice(0, 10);
+    const Status = "Closed";
+    console.log(request.body);
     try {
-        await Database.execute(`update malfunction set staffid = ${StaffID}, machineid = ${MachineID}, malfunctiondefinition = '${MalfunctionDefinition}', startdate = '${StartDate}', enddate = '${EndDate}', fixedby = '${FixedBy}', performedprocess = '${PerformedProcess}', status = '${Status}' where id = ${ID}`);
+        await Database.execute(`update malfunction set enddate = '${EndDate}', fixedby = '${FixedBy}', performedprocess = '${PerformedProcess}', status = '${Status}' where id = ${ID}`);
 
         console.log("Malfunction updated successfully");
         res.status(200).send("Malfunction updated successfully");
