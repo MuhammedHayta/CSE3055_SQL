@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
     <title>Your Title Here</title>
-    <script src="./../script.js" defer></script>
+    <script src="./../scripts/malfunction.js" defer></script>
 </head>
 
 <body>
     <div class="container p-4">
         <div class="row">
             <div class="col-4">
-                <form id="malfunctionForm">
+                <form id="malfunctionForm" class="malfunctionForm">
                     <div class="mb-3">
                         <label for="dropdown1" class="form-label">Issued By:</label>
                         <select id="dropdown1" name="dropdown1" class="form-select">
-                            
+
                         </select>
                     </div>
 
@@ -29,12 +29,12 @@
                     <div class="mb-3">
                         <label for="dropdown2" class="form-label">Machine:</label>
                         <select id="dropdown2" name="dropdown2" class="form-select">
-                            
+
                         </select>
                     </div>
                     <button type="submit" id="malfunctionButton" class="btn btn-primary">Submit</button>
                 </form>
-            </div> 
+            </div>
             <div class="col-2"></div>
             <div class="col-4">
                 <form id="fixedForm">
@@ -42,16 +42,16 @@
                     <div class="mb-3">
                         <label for="dropdown3" class="form-label">Fixed Machine:</label>
                         <select id="dropdown3" name="dropdown3" class="form-select">
-                            
+
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="string1" class="form-label">Mechanic Information:</label>
-                        <input type="text" id="fixedMachine" name="fixedMachine" class="form-control" />
+                        <label for="mechanicInformation" class="form-label">Mechanic Information:</label>
+                        <input type="text" id="mechanicInformation" name="mechanicInformation" class="form-control" />
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">Performed Process:</label>
-                        <input type="text" id="description" name="description" class="form-control" />
+                        <label for="performedProcess" class="form-label">Performed Process:</label>
+                        <input type="text" id="performedProcess" name="performedProcess" class="form-control" />
                     </div>
                     <button type="submit" id="fixedButton" class="btn btn-primary">Submit</button>
                 </form>
@@ -71,7 +71,7 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="malfunctionTable">
                 <tr>
                     <td>John Doe</td>
                     <td>Machine XYZ</td>
@@ -91,6 +91,27 @@
 
 
 </form>
+</div>
+
+
+<div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="popupModalLabel">Popup Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-content" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
