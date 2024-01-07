@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+
+    <!-- Include Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <title>Staff Movement Page</title>
+</head>
+
+<body>
+    <div class="container p-4">
+        <h1>Staff Movement</h1>
+        <form id="staffMovementForm">
+            <!-- Dropdown for Selecting Staff -->
+            <div class="mb-3">
+                <label for="staffSelect" class="form-label">Select Staff:</label>
+                <select id="staffSelect" name="staffSelect" class="form-select" style="width: 100%;">
+                    <!-- Replace this static data with the actual data from your database -->
+                    <option value="staff1">Staff 1</option>
+                    <option value="staff2">Staff 2</option>
+                    <option value="staff3">Staff 3</option>
+                    <!-- End of static data -->
+                </select>
+            </div>
+
+            <!-- Vehicle Plate (Optional) -->
+            <div class="mb-3">
+                <label for="vehiclePlate" class="form-label">Vehicle Plate (if exists):</label>
+                <input type="text" id="vehiclePlate" name="vehiclePlate" class="form-control" />
+            </div>
+
+            <!-- Departure Place -->
+            <div class="mb-3">
+                <label for="departurePlace" class="form-label">Departure Place:</label>
+                <input type="text" id="departurePlace" name="departurePlace" class="form-control" required />
+            </div>
+
+            <!-- Arrival Place -->
+            <div class="mb-3">
+                <label for="arrivalPlace" class="form-label">Arrival Place:</label>
+                <input type="text" id="arrivalPlace" name="arrivalPlace" class="form-control" required />
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label>
+                <textarea id="description" name="description" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <!-- Date -->
+            <div class="mb-3">
+                <label for="movementDate" class="form-label">Date:</label>
+                <input type="date" id="movementDate" name="movementDate" class="form-control" required />
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- Include jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+    <!-- Include Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Initialize Select2 for the staffSelect dropdown
+            $('#staffSelect').select2({
+                placeholder: 'Select staff',
+                width: '100%', // Adjust the width to 100%
+            });
+        });
+
+        // Add any additional JavaScript logic as needed
+    </script>
+</body>
+
+</html>
