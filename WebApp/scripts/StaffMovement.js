@@ -56,32 +56,56 @@ async function fetchStaffs() {
             console.error('Fetch error:', error);
         });
 }
-
-async function handleSubmitMalfunction(event) {
+async function handleSubmitStaffMovement(event) {
     event.preventDefault();  // Prevent the default form submission
 
     // Your form processing logic goes here
     // For example, you can fetch data, validate, or perform other actions
 
-    var formData = new FormData(document.getElementById("malfunctionForm"));
-
-    console.log(formData.get('staffSelect'));
-    const malfunction = {
-      "StaffID": StaffID,
-      "MalfunctionDefinition": definition,
-      "MachineID": MachineID
+    var formData = new FormData(document.getElementById("staffMovementForm"));
+    
+    const data = {
+        StaffID: formData.get('staffSelect'),
+        LicensePlate: formData.get('vehiclePlate'),
+        DeparturePlace: formData.get('departurePlace'),
+        ArrivalPlace: formData.get('arrivalPlace'),
+        Description: formData.get('description'),
+        Date: formData.get('movementDate')
     };
 
+    try {
+        const response = await fetch('http://localhost:5000/api/staff-movements', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        });
+        const json = await response.json();
+        console.log('Success:', JSON.stringify(json));
+
+        if (!response.ok) {
+            alert("Staff movement not added!");
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        alert("Staff movement added!");
+
+        await fetchStaffMovements();
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
     
 
-    // for (const [key, value] of formData.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
+    console.log(data);
+
 }
 
-
-const form = document.getElementById('malfunctionForm');
-form.addEventListener('submit', handleSubmitMalfunction);
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById('staffMovementForm');
+    form.addEventListener('submit', handleSubmitStaffMovement);
+});
 
 fetchStaffs();
 
