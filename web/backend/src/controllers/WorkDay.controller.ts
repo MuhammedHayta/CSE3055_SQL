@@ -13,13 +13,13 @@ const getAllWorkDays = async (req, res) => {
 }
 
 const addWorkDay = async (req, res) => {
-    const {StaffID, Date, EntryTime} = req.body;
-
+    const {StaffID, Date, EntryTime, ExitTime} = req.body;
+    console.log(req.body);
     const pool = await Database.getPool();
     const request = pool.request();
 
     try {
-        request.query(`insert into work_day values (${StaffID}, '${Date}', '${EntryTime}')`);
+        request.query(`insert into work_day values (${StaffID}, '${Date}', '${EntryTime}', '${ExitTime}')`);
 
         res.status(200).send("Work day added successfully");
     } catch (error) {
