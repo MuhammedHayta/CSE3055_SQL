@@ -3,12 +3,13 @@ CREATE TABLE PERSON(
     FirstName varchar(50) NOT NULL,
     LastName varchar(50) NOT NULL,
     Birthdate date NOT NULL,
-    PhoneNumber nvarchar(13),
-    IdentityNumber nvarchar(11)
+    PhoneNumber nvarchar(13) unique,
+    IdentityNumber nvarchar(11) unique
 );
 
 CREATE TABLE GUEST(
-    ID int foreign key references PERSON(ID),
+	ID int identity(1,1) primary key,
+    PersonID int foreign key references PERSON(ID),
     Company varchar(100),
 );
 
@@ -19,28 +20,29 @@ CREATE TABLE VEHICLE (
 
 CREATE TABLE GUEST_MOVEMENT(
     ID int identity(1,1) primary key,
-	GuestID int foreign key references PERSON(ID),
-	Vehicle int foreign key references VEHICLE(ID),
+	GuestID int foreign key references GUEST(ID),
+	VehicleID int foreign key references VEHICLE(ID),
     EnterDate dateTime DEFAULT(GETDATE()) NOT NULL,
     LeaveDate dateTime ,
     VisitingReason varchar(255),
-    WhoToVisit int foreign key references PERSON(ID),
+    WhoToVisit int foreign key references STAFF(ID),
     CardNumber varchar(12)
 )
 
 CREATE TABLE GUEST_CARD(
     ID int identity(1,1) primary key,
+    GuestMovementID int foreign key references GUEST_MOVEMENT(ID),
     CardNumber varchar(12) unique NOT NULL,
     CardName varchar(50),
-    CardStatus varchar(12) CHECK(CardStatus IN('Available', 'Busy', 'Lost')) DEFAULT('Available'),
-    Issued int foreign key references GUEST_MOVEMENT(ID),
+    CardStatus varchar(12) CHECK(CardStatus IN('Available', 'Busy', 'Lost')) DEFAULT('Available')
 );
 
-CREATE INDEX cardIndex ON GUEST_CARD(CardNumber);
+CREATE INDEX CardIndex ON GUEST_CARD(CardNumber);
+CREATE INDEX IdentityNumberIndex ON PERSON(IdentityNumber);
 
 Create Table STAFF(
-	StaffID int,
-	foreign key (StaffID) references PERSON(ID),
+	ID int primary key identity(1,1),
+	PersonID int foreign key references PERSON(ID),
 	BaseSalary float default 106.26,
 	Password nvarchar(50) check(len(Password) > 0),
 	UserPermission binary not null,
@@ -52,28 +54,23 @@ Create Table STAFF(
 )
 
 Create Table WORK_DAY(
-	ID int identity(1,1),
-	primary key (ID),
+	ID int primary key identity(1,1),
+	StaffID int foreign key references STAFF(ID),
 	Date date default getDate() check(Date <= getDate()),
 	EntryTime Time default cast(getDate() as Time),
-	ExitTime Time,
-	StaffID int
-	foreign key (StaffID) references PERSON(ID)
+	ExitTime Time	
 )
 
 Create Table DEPARTMENT(
-	DepartmentID int identity(1,1),
-	Primary key(DepartmentID),
+	ID int identity(1,1) primary key,
 	DepartmentName nvarchar(500),
 	Location nvarchar(500),
-	ManagerID int,
-	foreign key (ManagerID) references PERSON(ID)
+	ManagerID int foreign key references STAFF(ID),
 )
 
 Create Table ANNUAL_LEAVE(
-	ID int primary key,
-	staffID int,
-	foreign key (staffID) references PERSON(ID),
+	ID int identity(1,1) primary key,
+	StaffID int foreign key references STAFF(ID),
 	Description nvarchar(500) default 'EMPTY',
 	StartDate DateTime default getDate(),
 	EndDate DateTime ,
@@ -83,7 +80,7 @@ Create Table ANNUAL_LEAVE(
 
 CREATE TABLE MACHINE (
 	ID INT identity(1,1) PRIMARY KEY,
-	DepartmentId INT REFERENCES DEPARTMENT(DepartmentID),
+	DepartmentID INT REFERENCES DEPARTMENT(ID),
 	Description VARCHAR(255) CHECK (LEN(Description) <= 255),  -- Check constraint for maximum length of Description);
 	PurchaseDate DATE,
 	SellDate DATE,
@@ -95,8 +92,8 @@ CREATE TABLE MACHINE (
 
 CREATE TABLE MALFUNCTION (
     ID INT identity(1,1) PRIMARY KEY,
-	StaffId INT REFERENCES PERSON(ID),
-    MachineId INT REFERENCES MACHINE(ID),
+	StaffID INT REFERENCES STAFF(ID),
+    MachineID INT REFERENCES MACHINE(ID),
     MalfunctionDefinition VARCHAR(255),
     StartDate DATETime,
     EndDate DATETime,
@@ -109,7 +106,7 @@ CREATE TABLE MALFUNCTION (
 CREATE TABLE STAFF_MOVEMENT (
 	ID INT identity(1,1) PRIMARY KEY,
 	VehicleID INT REFERENCES VEHICLE(ID),
-	StaffId INT REFERENCES PERSON(ID),
+	StaffID INT REFERENCES STAFF(ID),
 	DeparturePlace VARCHAR(255),
 	ArrivalPlace VARCHAR(255),
 	Description VARCHAR(255),
@@ -124,4 +121,3 @@ CREATE TABLE PARKING_SLOT(
 	Category VARCHAR(100),
 	CHECK (Status IN ('Available', 'Occupied', 'Reserved')) -- Check constraint for valid Status values
 );
-CREATE INDEX cardIndex ON GUEST_CARD(CardNumber);
