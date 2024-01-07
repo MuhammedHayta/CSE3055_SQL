@@ -1,7 +1,7 @@
 create procedure ExitGuestMovement 
     @GuestCardID int,
     @GuestMovementLeaveDate datetime = NULL
-as 
+as
 
 begin
 	if (@GuestMovementLeaveDate = NULL)
@@ -11,13 +11,13 @@ begin
 
     --Get the guest movement id
     declare @GuestMovementID int
-    set @GuestMovementID = (select gc.issued from GUEST_CARD gc where gc.issued = @GuestCardID)
+    set @GuestMovementID = (select gc.GuestMovementID from GUEST_CARD gc where gc.ID = @GuestCardID)
 
     --Set guest card status to available
     --Set guest card issued to null
     update gc
     set gc.CardStatus = 'Available',
-        gc.issued = null
+        gc.GuestMovementID = null
     from GUEST_CARD gc
     where gc.ID = @GuestCardID
 
@@ -32,5 +32,6 @@ begin
     set ps.status = 'Available',
         ps.VehicleID = null
     from PARKING_SLOT ps
-    where ps.VehicleID = @GuestMovementID
+    inner join GUEST_MOVEMENT gm on gm.ID = @GuestMovementID
+    where ps.VehicleID = gm.VehicleID
 end
