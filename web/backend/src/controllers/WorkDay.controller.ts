@@ -1,3 +1,4 @@
+import sql from "mssql";
 import Database from "../utils/Database.js";
 
 const getAllWorkDays = async (req, res) => {
@@ -13,19 +14,26 @@ const getAllWorkDays = async (req, res) => {
 }
 
 const addWorkDay = async (req, res) => {
+    console.log("burasııııııııııııııııııııııııııııııııııııııııııııı")
     const {StaffID, Date, EntryTime, ExitTime} = req.body;
     console.log(req.body);
     const pool = await Database.getPool();
     const request = pool.request();
 
     try {
-        request.query(`insert into work_day values (${StaffID}, '${Date}', '${EntryTime}', '${ExitTime}')`);
+        request.input("StaffID", sql.Int, StaffID);
+        request.input("Date", sql.Date, Date);
+        request.input("EntryTime", sql.Time, EntryTime);
+        request.input("ExitTime", sql.Time, ExitTime);
+        request.query(`insert into work_day (staffid, date, entrytime, exittime) values (@StaffID, @Date, @EntryTime, @ExitTime)`);
 
         res.status(200).send("Work day added successfully");
     } catch (error) {
         console.log(error);
         res.status(500).send("Error while adding work day");
     } 
+
+    
 }
 
 const updateWorkDay = async (req, res) => {
