@@ -18,16 +18,20 @@ const getAllMalfunctions = async (req, res) => {
 }
 
 const addMalfunction = async (req, res) => {
-    const {staffID, machineID, startDate, malfunctionDefinition} = req.body;
+    const {StaffID, MachineID, MalfunctionDefinition} = req.body;
 
     const pool = await Database.getPool();
     const request = pool.request();
 
+    console.log(req.body)
+
+    const StartDate = new Date().toISOString().slice(0, 10);
+
     try {
-        request.input('StaffID', staffID);
-        request.input('MachineID', machineID);
-        request.input('StartDate', startDate);
-        request.input('MalfunctionDefinition', malfunctionDefinition);
+        request.input('StaffID', StaffID);
+        request.input('MachineID', MachineID);
+        request.input('StartDate', StartDate);
+        request.input('MalfunctionDefinition', MalfunctionDefinition);
 
         await request.execute('ReportMalfunction');
         console.log("Malfunction reported successfully");

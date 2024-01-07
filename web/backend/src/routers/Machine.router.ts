@@ -4,4 +4,5 @@ const router = express.Router();
 
 router.get("/", MachineController.getAllMachines);
 
+
 export default router;
