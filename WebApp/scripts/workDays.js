@@ -120,8 +120,8 @@ async function submitWorkDay() {
     const data = {
         "StaffID":StaffID,
         "Date": Date,
-        "StarHour":StartHour,
-        "EndHour":EndHour
+        "EntryTime":StartHour,
+        "ExitTime":EndHour
     };
 
     try {
