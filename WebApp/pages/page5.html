@@ -27,11 +27,6 @@
                         <div class="mb-3">
                             <label for="existingGuest" class="form-label">Select Existing Guest:</label>
                             <select id="existingGuest" name="existingGuest" class="form-select" style="width: 100%;">
-                                <!-- Replace this static data with the actual data from your database -->
-                                <option value="1">John Doe - ID: 123456</option>
-                                <option value="2">Jane Smith - ID: 789012</option>
-                                <option value="3">Bob Johnson - ID: 345678</option>
-                                <!-- End of static data -->
                             </select>
                         </div>
                     </div>
@@ -41,39 +36,33 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="firstName" class="form-label">First Name:</label>
-                                <input type="text" id="firstName" name="firstName" class="form-control" required />
+                                <input type="text" id="firstName" name="firstName" class="form-control" />
                             </div>
                             <div class="col-md-6">
                                 <label for="lastName" class="form-label">Last Name:</label>
-                                <input type="text" id="lastName" name="lastName" class="form-control" required />
+                                <input type="text" id="lastName" name="lastName" class="form-control" />
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="birthDate" class="form-label">Birth Date:</label>
-                            <input type="date" id="birthDate" name="birthDate" class="form-control" required />
+                            <input type="date" id="birthDate" name="birthDate" class="form-control" />
                         </div>
 
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Phone Number:</label>
-                            <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" required />
+                            <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" />
                         </div>
 
                         <div class="mb-3">
                             <label for="identityNumber" class="form-label">Identity Number:</label>
-                            <input type="text" id="identityNumber" name="identityNumber" class="form-control" required />
+                            <input type="text" id="identityNumber" name="identityNumber" class="form-control" />
                         </div>
 
                         <div class="mb-3">
                             <label for="company" class="form-label">Company:</label>
-                            <input type="text" id="company" name="company" class="form-control" required />
+                            <input type="text" id="company" name="company" class="form-control" />
                         </div>
-                    </div>
-
-                    <!-- Guest Movement Information -->
-                    <div class="mb-3">
-                        <label for="movementInfo" class="form-label">Guest Movement Information:</label>
-                        <textarea id="movementInfo" name="movementInfo" class="form-control" rows="3" required></textarea>
                     </div>
 
                     <!-- Vehicle Details -->
@@ -85,22 +74,17 @@
                     <!-- Visiting Reason -->
                     <div class="mb-3">
                         <label for="visitingReason" class="form-label">Visiting Reason:</label>
-                        <input type="text" id="visitingReason" name="visitingReason" class="form-control" required />
+                        <input type="text" id="visitingReason" name="visitingReason" class="form-control" />
                     </div>
 
                     <!-- Dropdown for Whom to Visit -->
                     <div class="mb-3">
                         <label for="whomToVisit" class="form-label">Whom to Visit:</label>
                         <select id="whomToVisit" name="whomToVisit" class="form-select" style="width: 100%;">
-                            <!-- Replace this static data with the actual data from your database -->
-                            <option value="employee1">Employee 1</option>
-                            <option value="employee2">Employee 2</option>
-                            <option value="employee3">Employee 3</option>
-                            <!-- End of static data -->
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Start movement</button>
                 </form>
             </div>
             <div class="col-2"></div>

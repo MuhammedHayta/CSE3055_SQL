@@ -7,7 +7,7 @@ class Database {
   private static config = {
     user: 'sa',
     password: '123456',
-    server: 'DESKTOP-TDQC2P0',
+    server: 'HAZE-DELL',
     database: 'ERŞAT_FACTORY',
     options: {
         encrypt: true,
